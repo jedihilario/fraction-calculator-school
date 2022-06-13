@@ -34,40 +34,40 @@ class Fraccion {
         const numerador = (this.numerador * frac.denominador) + (this.denominador * frac.numerador);
         const denominador = this.denominador * frac.denominador;
 
-        return {
+        return this.simplificar({
             numerador : numerador,
             denominador : denominador
-        }
+        })
     }
 
     resta(frac) {
         const numerador = (this.numerador * frac.denominador) - (this.denominador * frac.numerador);
         const denominador = this.denominador * frac.denominador;
 
-        return {
+        return this.simplificar({
             numerador : numerador,
             denominador : denominador
-        }
+        })
     }
 
     multiplicacion(frac) {
         const numerador = this.numerador * frac.numerador;
         const denominador = this.denominador * frac.denominador;
 
-        return {
+        return this.simplificar({
             numerador : numerador,
             denominador : denominador
-        }
+        })
     }
 
     division(frac) {
         const numerador = this.numerador * frac.denominador;
         const denominador = this.denominador * frac.numerador;
 
-        return {
+        return this.simplificar({
             numerador : numerador,
             denominador : denominador
-        }
+        })
     }
 
     simplificar(frac) {
