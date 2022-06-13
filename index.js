@@ -77,9 +77,9 @@ class Fraccion {
 
         if(frac.numerador > frac.denominador) {
             for(let i = 0; !simplificado; i++) {
-                if((frac.numerador % (frac.denominador - i) == 0) && (frac.denominador % frac.denominador - i == 0)) {
-                    numerador = frac.numerador / frac.denominador - i;
-                    denominador = frac.denominador / frac.denominador - i;
+                if((frac.numerador % (frac.denominador - i) == 0) && (frac.denominador % (frac.denominador - i) == 0)) {
+                    numerador = frac.numerador / (frac.denominador - i);
+                    denominador = frac.denominador / (frac.denominador - i);
                     simplificado = true;
                 } else if(i === frac.denominador) {
                     return {
@@ -113,9 +113,42 @@ class Fraccion {
 const primerFraccion = new Fraccion(1, 2);
 const segundaFraccion = new Fraccion(1, 2);
 
+const buttons = {
+    suma : document.getElementById('suma'),
+    multiplicacion : document.getElementById('multiplicacion')
+}
+
 document.getElementById('value_change').addEventListener('click', () => {
     document.querySelector('.container').style.display = 'none';
     document.querySelector('.value_form').style.display = 'flex';
+});
+
+document.getElementById('value_submit').addEventListener('click', () => {
+    primerFraccion.numerador = document.querySelector('#first_frac_num') ? Number(document.querySelector('#first_frac_num').value) : primerFraccion.numerador;
+    primerFraccion.denominador = document.querySelector('#first_frac_den') ? Number(document.querySelector('#first_frac_den').value) : primerFraccion.denominador;
+    segundaFraccion.numerador = document.querySelector('#second_frac_num') ? Number(document.querySelector('#second_frac_num').value) : segundaFraccion.numerador;
+    segundaFraccion.denominador = document.querySelector('#second_frac_den') ? Number(document.querySelector('#second_frac_den').value) : segundaFraccion.denominador;
+    document.querySelector('.value_form').style.display = 'none';
+    document.querySelector('.container').style.display = 'flex';
+
+    primerFraccion.changePageContent();
+    segundaFraccion.changePageContent();
+});
+
+buttons.suma.addEventListener('click', () => {
+    document.querySelector('.output__sign').innerHTML = `
+        ${primerFraccion.suma(segundaFraccion).numerador}<br>
+        -<br>
+        ${primerFraccion.suma(segundaFraccion).denominador}
+    `;
+});
+
+buttons.multiplicacion.addEventListener('click', () => {
+    document.querySelector('.output__sign').innerHTML = `
+        ${primerFraccion.multiplicacion(segundaFraccion).numerador}<br>
+        -<br>
+        ${primerFraccion.multiplicacion(segundaFraccion).denominador}
+    `;
 });
 
 window.onload = () => {
