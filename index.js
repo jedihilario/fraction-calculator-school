@@ -16,6 +16,11 @@ class Fraccion {
                 denominador : this.denominador < 0 ? -this.denominador : this.denominador
             }
         }
+
+        return {
+            numerador : this.numerador,
+            denominador : this.denominador
+        }
     }
 
     set htmlElement(element) {
@@ -90,7 +95,7 @@ class Fraccion {
             }
         } else {
             for(let i = 0; !simplificado; i++) {
-                if((frac.denominador % (frac.numerador - i) == 0) && (frac.numerador % frac.numerador - i == 0)) {
+                if((frac.denominador % (frac.numerador - i) == 0) && (frac.numerador % (frac.numerador - i) == 0)) {
                     numerador = frac.numerador / (frac.numerador - i);
                     denominador = frac.denominador / (frac.numerador - i);
                     simplificado = true;
@@ -112,10 +117,17 @@ class Fraccion {
 
 const primerFraccion = new Fraccion(1, 2);
 const segundaFraccion = new Fraccion(1, 2);
+const output = document.querySelector('.output__sign');
 
 const buttons = {
     suma : document.getElementById('suma'),
-    multiplicacion : document.getElementById('multiplicacion')
+    multiplicacion : document.getElementById('multiplicacion'),
+    restaFirst : document.getElementById('resta_first_second'),
+    restaSecond : document.getElementById('resta_second_first'),
+    decimal : document.getElementById('decimal'),
+    valorAbsoluto : document.getElementById('valor_absoluto'),
+    divisionFirst : document.getElementById('division_first'),
+    divisionSecond : document.getElementById('division_second')
 }
 
 document.getElementById('value_change').addEventListener('click', () => {
@@ -136,7 +148,7 @@ document.getElementById('value_submit').addEventListener('click', () => {
 });
 
 buttons.suma.addEventListener('click', () => {
-    document.querySelector('.output__sign').innerHTML = `
+    output.innerHTML = `
         ${primerFraccion.suma(segundaFraccion).numerador}<br>
         -<br>
         ${primerFraccion.suma(segundaFraccion).denominador}
@@ -144,12 +156,58 @@ buttons.suma.addEventListener('click', () => {
 });
 
 buttons.multiplicacion.addEventListener('click', () => {
-    document.querySelector('.output__sign').innerHTML = `
+    output.innerHTML = `
         ${primerFraccion.multiplicacion(segundaFraccion).numerador}<br>
         -<br>
         ${primerFraccion.multiplicacion(segundaFraccion).denominador}
     `;
 });
+
+buttons.restaFirst.addEventListener('click', () => {
+    output.innerHTML = `
+        ${primerFraccion.resta(segundaFraccion).numerador}<br>
+        -<br>
+        ${primerFraccion.resta(segundaFraccion).denominador}
+    `;
+});
+
+buttons.restaSecond.addEventListener('click', () => {
+    output.innerHTML = `
+        ${segundaFraccion.resta(primerFraccion).numerador}<br>
+        -<br>
+        ${segundaFraccion.resta(primerFraccion).denominador}
+    `;
+});
+
+buttons.decimal.addEventListener('click', () => {
+    output.innerHTML = `
+        ${primerFraccion.decimal.toFixed(2)} - ${segundaFraccion.decimal.toFixed(2)}
+    `;
+});
+
+buttons.valorAbsoluto.addEventListener('click', () => {
+    output.innerHTML = `
+        ${primerFraccion.valorAbsoluto.numerador}            ${segundaFraccion.valorAbsoluto.numerador}<br>
+                        -                             -                          -<br>
+        ${primerFraccion.valorAbsoluto.denominador}          ${segundaFraccion.valorAbsoluto.denominador}
+    `;
+});
+
+buttons.divisionFirst.addEventListener('click', () => {
+    output.innerHTML = `
+        ${primerFraccion.division(segundaFraccion).numerador}<br>
+        -<br>
+        ${primerFraccion.division(segundaFraccion).denominador}
+    `
+})
+
+buttons.divisionSecond.addEventListener('click', () => {
+    output.innerHTML = `
+        ${segundaFraccion.division(primerFraccion).numerador}<br>
+        -<br>
+        ${segundaFraccion.division(primerFraccion).denominador}
+    `
+})
 
 window.onload = () => {
     primerFraccion.htmlElement = document.querySelector('.first_fraccion');
